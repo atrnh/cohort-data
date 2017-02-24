@@ -14,10 +14,12 @@ def unique_houses(filename):
     """
     cohort_data = open(filename)
     houses = set()
+
     for line in cohort_data:
         data = line.split("|")
         if data[2] != '':
             houses.add(data[2])
+    cohort_data.close()
     return houses
 
 
@@ -43,7 +45,32 @@ def sort_by_cohort(filename):
     fall_15 = []
     ghosts = []
 
-    # Code goes here
+    cohort_data = open(filename)
+
+    for line in cohort_data:
+        data = line.rstrip().split("|")
+        first_name = data[0]
+        last_name = data[1]
+        cohort = data[4]
+
+        if cohort == "Fall 2015":
+            fall_15.append(first_name + " " + last_name)
+        elif cohort == "Winter 2016":
+            winter_16.append(first_name + " " + last_name)
+        elif cohort == "Spring 2016":
+            spring_16.append(first_name + " " + last_name)
+        elif cohort == "Summer 2016":
+            summer_16.append(first_name + " " + last_name)
+        elif cohort == "G":
+            ghosts.append(first_name + " " + last_name)
+
+    ghosts.sort()
+    fall_15.sort()
+    spring_16.sort()
+    summer_16.sort()
+    winter_16.sort()
+
+    all_students = [fall_15, spring_16, summer_16, winter_16]
 
     return all_students
 
@@ -167,8 +194,8 @@ def find_house_members_by_student_name(student_list):
 
 # Here is some useful code to run these functions!
 
-print unique_houses("cohort_data.txt")
-# print sort_by_cohort("cohort_data.txt")
+# print unique_houses("cohort_data.txt")
+print sort_by_cohort("cohort_data.txt")
 # print hogwarts_by_house("cohort_data.txt")
 # all_students_data = all_students_tuple_list("cohort_data.txt")
 # print all_students_data
